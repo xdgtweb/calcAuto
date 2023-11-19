@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora Automática</title>
+  <title>Cálculo Automático</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -46,7 +46,6 @@
     }
 
     button {
-      background-color: #4caf50;
       color: white;
       padding: 12px 20px;
       border: none;
@@ -54,6 +53,17 @@
       cursor: pointer;
       font-size: 16px;
       transition: background-color 0.3s ease;
+      margin: 8px;
+    }
+
+    .green
+    {
+      background-color: #4caf50;
+    }
+
+    .red
+    {
+      background-color: #af4c4c;
     }
 
     button:hover {
@@ -65,7 +75,7 @@
 
   <div class="calculator">
     <label for="variable1">Variable 1:</label>
-    <input type="number" id="variable1">
+    <input type="number" id="variable1" oninput="calcular()">
 
     <label for="result1">Resultado 1:</label>
     <input type="text" id="result1" readonly>
@@ -76,23 +86,58 @@
     <label for="result3">Resultado 3:</label>
     <input type="text" id="result3" readonly>
 
-    <button onclick="calcular()">Actualizar</button>
+    <button class="red" onclick="resetear()">Resetear</button>
+    <button class="green" onclick="reemplazarValor()">Reemplazar Valor</button>
+
+    <script>
+      function calcular() {
+        var variable1 = parseFloat(document.getElementById('variable1').value);
+        if (!isNaN(variable1)) {
+          var resultado1 = (variable1 * 2) / 100;
+          var resultado2 = resultado1 * 3;
+          var resultado3 = variable1 + resultado2;
+
+          document.getElementById('result1').value = resultado1.toFixed(2);
+          document.getElementById('result2').value = resultado2.toFixed(2);
+          document.getElementById('result3').value = resultado3.toFixed(2);
+
+          // Guardar los valores en localStorage
+          localStorage.setItem('variable1', variable1);
+          localStorage.setItem('resultado1', resultado1.toFixed(2));
+          localStorage.setItem('resultado2', resultado2.toFixed(2));
+          localStorage.setItem('resultado3', resultado3.toFixed(2));
+        }
+      }
+
+      function reemplazarValor() {
+        var resultado3 = parseFloat(document.getElementById('result3').value);
+        if (!isNaN(resultado3)) {
+          document.getElementById('variable1').value = resultado3;
+          calcular(); // Volver a calcular con el nuevo valor de variable1
+        }
+      }
+
+      function resetear() {
+        localStorage.clear();
+        document.getElementById('variable1').value = '';
+        document.getElementById('result1').value = '';
+        document.getElementById('result2').value = '';
+        document.getElementById('result3').value = '';
+      }
+
+      // Cargar los valores del localStorage al cargar la página
+      window.onload = function() {
+        document.getElementById('variable1').value = localStorage.getItem('variable1') || '';
+        document.getElementById('result1').value = localStorage.getItem('resultado1') || '';
+        document.getElementById('result2').value = localStorage.getItem('resultado2') || '';
+        document.getElementById('result3').value = localStorage.getItem('resultado3') || '';
+
+        calcular(); // Volver a calcular con los valores cargados
+      };
+    </script>
   </div>
-
-  <script>
-    function calcular() {
-      var variable1 = parseFloat(document.getElementById('variable1').value);
-      var resultado1 = (variable1 * 2) / 100;
-      var resultado2 = resultado1 * 3;
-      var resultado3 = variable1 + resultado2;
-
-      document.getElementById('result1').value = resultado1.toFixed(2);
-      document.getElementById('result2').value = resultado2.toFixed(2);
-      document.getElementById('result3').value = resultado3.toFixed(2);
-
-      document.getElementById('variable1').value = resultado3.toFixed(2);
-    }
-  </script>
 
 </body>
 </html>
+
+
