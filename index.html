@@ -66,14 +66,20 @@
       background-color: #af4c4c;
     }
 
-    button:hover {
-      background-color: #45a049;
+    #contador {
+      color: #ff9800;
+      font-size: 20px;
+      margin-top: 10px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
 
   <div class="calculator">
+
+    <div id="contador">Contador: 0</div>
+
     <label for="variable1">Variable 1:</label>
     <input type="number" id="variable1" oninput="calcular()">
 
@@ -86,10 +92,12 @@
     <label for="result3">Resultado 3:</label>
     <input type="text" id="result3" readonly>
 
-    <button class="red" onclick="resetear()">Resetear</button>
     <button class="green" onclick="reemplazarValor()">Reemplazar Valor</button>
+    <button class="red" onclick="resetear()">Resetear</button>
 
     <script>
+      var contador = 0;
+
       function calcular() {
         var variable1 = parseFloat(document.getElementById('variable1').value);
         if (!isNaN(variable1)) {
@@ -114,6 +122,8 @@
         if (!isNaN(resultado3)) {
           document.getElementById('variable1').value = resultado3;
           calcular(); // Volver a calcular con el nuevo valor de variable1
+          contador++;
+          actualizarContador();
         }
       }
 
@@ -123,6 +133,12 @@
         document.getElementById('result1').value = '';
         document.getElementById('result2').value = '';
         document.getElementById('result3').value = '';
+        contador = 1;
+        actualizarContador();
+      }
+
+      function actualizarContador() {
+        document.getElementById('contador').innerText = 'Contador: ' + contador;
       }
 
       // Cargar los valores del localStorage al cargar la página
@@ -133,11 +149,10 @@
         document.getElementById('result3').value = localStorage.getItem('resultado3') || '';
 
         calcular(); // Volver a calcular con los valores cargados
+        actualizarContador();
       };
     </script>
   </div>
 
 </body>
 </html>
-
-
