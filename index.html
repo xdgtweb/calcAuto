@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora de interés compuesto</title>
+  <title>Cálculo Automático</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -32,6 +32,8 @@
     label {
       display: block;
       margin-bottom: 8px;
+      text-align: left;
+      margin-left: 10px;
     }
 
     input {
@@ -83,6 +85,9 @@
     <label for="variable1">Variable 1:</label>
     <input type="number" id="variable1" oninput="calcular()">
 
+    <label for="percentage">Porcentaje (%):</label>
+    <input type="number" id="percentage" oninput="calcular()" value="2">
+
     <label for="result1">Resultado 1:</label>
     <input type="text" id="result1" readonly>
 
@@ -100,8 +105,10 @@
 
       function calcular() {
         var variable1 = parseFloat(document.getElementById('variable1').value);
-        if (!isNaN(variable1)) {
-          var resultado1 = (variable1 * 2) / 100;
+        var percentage = parseFloat(document.getElementById('percentage').value);
+
+        if (!isNaN(variable1) && !isNaN(percentage)) {
+          var resultado1 = (variable1 * percentage) / 100;
           var resultado2 = resultado1 * 3;
           var resultado3 = variable1 + resultado2;
 
@@ -110,6 +117,7 @@
           document.getElementById('result3').value = resultado3.toFixed(2);
 
           localStorage.setItem('variable1', variable1);
+          localStorage.setItem('percentage', percentage);
           localStorage.setItem('resultado1', resultado1.toFixed(2));
           localStorage.setItem('resultado2', resultado2.toFixed(2));
           localStorage.setItem('resultado3', resultado3.toFixed(2));
@@ -140,13 +148,13 @@
         actualizarContador();
       }
 
-
       function actualizarContador() {
         document.getElementById('contador').innerText = 'Contador: ' + contador;
       }
 
       window.onload = function () {
         document.getElementById('variable1').value = localStorage.getItem('variable1') || '';
+        document.getElementById('percentage').value = localStorage.getItem('percentage') || '2';
         document.getElementById('result1').value = localStorage.getItem('resultado1') || '';
         document.getElementById('result2').value = localStorage.getItem('resultado2') || '';
         document.getElementById('result3').value = localStorage.getItem('resultado3') || '';
