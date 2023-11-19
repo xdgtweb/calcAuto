@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Automática</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .calculator {
+      background-color: #2b2b2b;
+      border: 1px solid #333;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: calc(100% - 16px);
+      padding: 10px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border: 1px solid #333;
+      border-radius: 4px;
+      font-size: 16px;
+      background-color: #333;
+      color: #fff;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <label for="variable1">Variable 1:</label>
+    <input type="number" id="variable1">
+
+    <label for="result1">Resultado 1:</label>
+    <input type="text" id="result1" readonly>
+
+    <label for="result2">Resultado 2:</label>
+    <input type="text" id="result2" readonly>
+
+    <label for="result3">Resultado 3:</label>
+    <input type="text" id="result3" readonly>
+
+    <button onclick="calcular()">Actualizar</button>
+  </div>
+
+  <script>
+    function calcular() {
+      var variable1 = parseFloat(document.getElementById('variable1').value);
+      var resultado1 = (variable1 * 2) / 100;
+      var resultado2 = resultado1 * 3;
+      var resultado3 = variable1 + resultado2;
+
+      document.getElementById('result1').value = resultado1.toFixed(2);
+      document.getElementById('result2').value = resultado2.toFixed(2);
+      document.getElementById('result3').value = resultado3.toFixed(2);
+
+      document.getElementById('variable1').value = resultado3.toFixed(2);
+    }
+  </script>
+
+</body>
+</html>
